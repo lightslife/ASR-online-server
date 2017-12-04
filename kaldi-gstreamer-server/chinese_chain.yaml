@@ -1,0 +1,57 @@
+# You have to download Librispeech "online nnet2" models in order to use this sample
+# Run download-chinese-nnet2.sh in 'test/models' to download them.
+use-nnet2: True
+decoder:
+    # All the properties nested here correspond to the kaldinnet2onlinedecoder GStreamer plugin properties.
+    # Use gst-inspect-1.0 ./libgstkaldionline2.so kaldinnet2onlinedecoder to discover the available properties
+    nnet-mode: 3
+    nnet-batch-size: 128
+    use-threaded-decoder: false
+    model : chain-chinese/final.mdl
+    word-syms : chain-chinese/words.txt
+    fst : chain-chinese/HCLG.fst
+    mfcc-config : chain-chinese/conf/mfcc.conf
+    ivector-extraction-config : chain-chinese/conf/ivector_extractor.fixed.conf
+    max-active: 10000
+    beam: 13.0
+    lattice-beam: 6.0
+    acoustic-scale: 1.0
+    do-endpointing : true
+    endpoint-silence-phones : "1:2:3:4:5:6:7:8:9:10"
+    max-state-duration: 40
+    traceback-period-in-secs: 0.25
+    chunk-length-in-secs: 0.40
+    num-nbest: 10
+    frame-subsampling-factor: 3
+    #Additional functionality that you can play with:
+    #lm-fst:  chain-chinese/G.fst
+    #big-lm-const-arpa: chain-chinese/G.carpa
+    #phone-syms: chain-chinese/phones.txt
+    #word-boundary-file: chain-chinese/word_boundary.int
+    #do-phone-alignment: true
+out-dir: tmp
+
+use-vad: False #True #False  #True
+silence-timeout: 20
+
+# Just a sample post-processor that appends "." to the hypothesis
+post-processor: perl -npe 'BEGIN {use IO::Handle; STDOUT->autoflush(1);} s/(.*)/\1。/; s/ //g;    s/(.*吗)/\1？/; s/？。/？/g;    s/(.*啊)/\1！/; s/！。/！/g;   s/(.*呢)/\1？/; s/？。/？/g;  '
+
+# A sample full post processor that add a confidence score to 1-best hyp and deletes other n-best hyps
+#full-post-processor: ./sample_full_post_processor.py
+
+logging:
+    version : 1
+    disable_existing_loggers: False
+    formatters:
+        simpleFormater:
+            format: '%(asctime)s - %(levelname)7s: %(name)10s: %(message)s'
+            datefmt: '%Y-%m-%d %H:%M:%S'
+    handlers:
+        console:
+            class: logging.StreamHandler
+            formatter: simpleFormater
+            level: DEBUG
+    root:
+        level: DEBUG
+        handlers: [console]

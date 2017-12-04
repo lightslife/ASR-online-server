@@ -1,0 +1,24 @@
+使用说明：
+
+1、首先打开一个linux终端进入github/kaldi-gstreamer-server/
+
+执行命令：python kaldigstserver/master_server.py --port=8888
+该命令是打开server端的
+2、然后另外打开一个linux终端，也进入该路径
+执行命令：python kaldigstserver/worker.py -u ws://localhost:8888/worker/ws/speech -c chinese_chain.yaml
+该命令将启动kaldi解码的进程
+
+3、然后就可以提供语音识别服务了
+A、可以通过脚本测试服务是否正常
+   python kaldigstserver/client.py -r 32000  0.wav
+   32000 为16k的采样率每秒对应的数据点数，wav为语音路径
+   也可以参考该脚本来连接语音识别服务
+
+
+B、识别服务正常的话，就可以提供网页识别服务
+   该服务需要进入dictate.js目录下，执行python -m SimpleHTTPServer
+   该服务默认启动8000端口
+   该前端连接了服务器解码进程，
+
+注释：如果端口被占用，需要先结束占用，如果服务出现异常，需要先将之前的几个python进程都结束使用，
+      目前dictate似乎只能用firefox，主要是语音录制等的前端问题，chrome好像还有兼容问题，具体可以参考dictate说明
