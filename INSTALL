@@ -1,0 +1,54 @@
+asr在线平台使用教程
+
+1、ASR云平台简介
+asr云平台目前使用kaldi开源框架进行优化而来，提供的在线服务分为server，worker，和client
+其中server为对外提供服务的主机，它进行了任务的调度和分配
+worker提供了解码的服务，worker可以是其他的服务器
+client为访问服务的用户
+
+server需要安装工具有：python，ws4py (0.3.2版本），YAML， JSON，Tornado 4，
+gst-inspect-1.0
+参考：在ubuntu 1604 版本上安装方式
+
+a、gstreamer
+
+requirement：
+  * libgstreamer1.0-dev
+  * gstreamer1.0-plugins-good
+  * gstreamer1.0-tools
+  * gstreamer1.0-pulseaudio
+
+install：
+sudo apt-get install gstreamer1.0-plugins-bad  gstreamer1.0-plugins-base gstreamer1.0-plugins-good  gstreamer1.0-pulseaudio  gstreamer1.0-plugins-ugly  gstreamer1.0-tools libgstreamer1.0-dev
+sudo apt-get install libjansson-dev
+
+
+b、python2.7
+requirement：
+	* tornado
+	* ws4py
+	* yaml
+	* json
+
+install:
+sudo apt-get install python-pip
+pip install tornado
+pip install ws4py  
+pip install pyyaml
+pip install simplejson
+
+
+c、gst-online
+cd src
+make depend
+KALDI_ROOT=/path/of/kaldi-trunk make
+GST_PLUGIN_PATH=. gst-inspect-1.0 kaldinnet2onlinedecoder
+
+vim .profile
+export GST_PLUGIN_PATH=/HOME/TEST/GST
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/HOME/TEST/KALDI-SO
+
+d、kaldi
+./configure --shared
+make depend 
+make ext 
