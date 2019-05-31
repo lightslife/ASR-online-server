@@ -1,0 +1,144 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="utf8">
+    <title>Dikteeri! | Dikteerimine</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Test description">
+    <meta name="author" content="">
+
+
+    
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/united/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/flatly/bootstrap.min.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->    
+        <link href="/dikteeri/media/css/dikteeri.css" rel="stylesheet">
+
+
+
+            <link rel="shortcut icon" href="/dikteeri/media/img/favicon.ico">
+    <link rel="apple-touch-icon" href="/dikteeri/media/img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/dikteeri/media/img/appleimgim-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/dikteeri/media/img/apple-touch-icon-114x114.png">
+        
+        
+            <script>
+  var _gaq = [['_setAccount', 'UA-18651078-4'], ['_trackPageview']];
+  (function(d, t) {
+    var g = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+    g.src = '//www.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g, s);
+  }(document, 'script'));
+</script>
+      </head>
+
+  <body class="index">
+
+    
+    <div class="container">
+        <!-- Static navbar -->
+  <div class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="index.html">Dikteerimine</a>
+      </div>
+      <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+<li><a href="about.html">Tutvustus</a></li></ul>
+      </div>
+    </div>
+      </div>
+
+
+       
+ 
+      <p><div class="">
+    <p class="">Sellel veebilehel saab kõnetuvastuse abil dikteerida eestikeelset teksti. 
+    Veebibrauser saadab reaalajaliselt kõne TTÜ Küberneetika Instituudi serverisse, kus see muudetakse tekstiks ning saadetakse brauserisse tagasi.
+    </p>
+  </div>
+  <div class="alert alert-warning  alert-dismissable" id="show_once_message">
+  <button type="button" id="show_once_message_close_button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <p>Dikteerimine töötab hetkel <a href="http://www.google.com/chrome/">Google Chrome'i</a> suhteliselt värske versiooniga (Windows, Mac, Linux, Android). Töötab ka Firefox 
+  värske versioon (testitud versiooniga 31).
+  Leht peaks aadressiriba all küsima luba mikrofoni
+  kasutamiseks, see luba tuleks siis anda, vastasel juhul dikteerimine ei tööta.</p>
+  <div class="hidden-xs hidden-sm">
+  <p><span class="label label-info">Tähelepanu:</span> rahuldava tuvastuskvaliteedi saamiseks tuleks kasutada suu lähedal olevat nn <em>headset</em>-tüüpi mikrofoni 
+  (näiteks <a href="http://www.hinnavaatlus.ee/products/Arvutikomponendid/K%C3%B5rvaklapid/266423/">selline</a>). Kindlasti ei tasu
+  dikteerida näiteks sülearvuti sisseehitatud mikrofoniga. 
+  </p>
+  </div>
+  </div>
+  Parima tulemuse saamiseks tuleks dikteerida selge häälega ja mõõdukas tempos (umbes nagu raadiodiktor). Sõnade vahel pause ei pea tegema.
+  Dikteerida saab ka kirjavahemärke (",.!?:;") ja reavahetusi (ütle <em>"uus rida"</em>). 
+  <div class="well">
+  <div class="text-center">
+    <div id="button-toolbar" class="hidden btn-toolbar hidden-xs hidden-sm" role="toolbar">
+        <button id="submitButton" type="button" class="btn btn-default disabled" onclick="submitReference();" title="Saada parandatud tekst serverisse, et seda kasutada kõnetuvastusmootori parandamiseks"><span class="glyphicon glyphicon-upload"></span> Saada parandus</button>
+        <button id="resetButton" type="button" class="btn btn-default" onClick="resetText();"><span class="glyphicon glyphicon-remove"></span> Tühjenda</button>
+    </div><br />
+  <p>
+  <textarea id="trans" class="form-control" rows="6"></textarea>
+  </p>
+  </div>
+  <div id="content_id" class="hidden">xxx</div>
+  <div id="user_id" class="hidden">xxx</div>
+  <div id="recbutton" class="disabled" onclick="toggleListening();"></div>
+  <p id="helptext" class="text-center tiny">Mikrofon initsialiseerimata</p>
+  </div>
+  <hr/></p>
+<p><p>Hetkel on serveris dikteerimiseks <span id="serverStatusBar">0</span>
+  vaba slotti.
+  </p></p>
+<!--
+  <div class="small hidden-xs hidden-sm">
+  Eksperimentaalne bookmarklet:
+  <a href="javascript:(function(){if(window.myBookmarklet!==undefined){myBookmarklet();}else{document.body.appendChild(document.createElement('script')).src='/dikteeri/media/js/bookmarklet.js';}})();">Dikteeri!</a>
+  </div>
+-->
+
+<p><div class="small">
+  <p>Dikteeritud kõnet võidakse kasutada kõnetuvastussüsteemi parandamiseks. Dikteeritud kõnet
+  ega tuvastatud teksti ei jagata kolmandatele osapooltele.
+  </p>
+  </div></p>
+      <hr>
+      <footer>
+                <p>Autor: <a href="http://www.phon.ioc.ee">TTÜ Küberneetika Instituudi foneetika ja kõnetehnoloogia labor</a></p>
+              </footer>
+    </div> <!-- /container -->
+
+        
+                    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/dikteeri/media/js/libs/jquery-1.10.1.min.js">\x3C/script>')</script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
+    
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    
+        <script src="/dikteeri/media/js/libs/dictate.js/lib/dictate.js"></script>
+    <script src="/dikteeri/media/js/libs/dictate.js/lib/recorder.js"></script>
+    <script src="/dikteeri/media/js/libs/dictate.js/lib/speex.min.js"></script>    
+    <script src="/dikteeri/media/js/libs/notify-combined.min.js"></script>    
+    <script src="/dikteeri/media/js/libs/jquery.cookieBar.js"></script>    
+    <script src="/dikteeri/media/js/dikteeri.js"></script>
+
+
+    <!--[if lt IE 7 ]>
+      <script src="/dikteeri/media/js/libs/dd_belatedpng.js"></script>
+      <script>DD_belatedPNG.fix('img, .png_bg'); // Fix any <img> or .png_bg bg-images. Also, please read goo.gl/mZiyb </script>
+    <![endif]-->
+
+
+
+      </body>
+</html>
